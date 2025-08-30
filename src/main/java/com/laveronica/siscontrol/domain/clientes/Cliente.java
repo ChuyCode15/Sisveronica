@@ -27,6 +27,9 @@ public class Cliente {
     private String cp;
     private String municipio;
     private String estado;
+    @Column(nullable = false)
+    private boolean activo = true;
+
 
     public Cliente(@Valid DatosRegistroCliente datos){
         this.nombre = datos.nombre();

@@ -7,5 +7,6 @@ CREATE TABLE clientes (
     fraccionamiento VARCHAR(255),
     c_p VARCHAR(50) NOT NULL,
     municipio VARCHAR(255),
-    estado VARCHAR(255)
+    estado VARCHAR(255),
+    activo BOOLEAN
 );

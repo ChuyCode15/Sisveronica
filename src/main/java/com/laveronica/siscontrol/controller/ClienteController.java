@@ -3,6 +3,7 @@ package com.laveronica.siscontrol.controller;
 import com.laveronica.siscontrol.domain.clientes.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -38,9 +39,15 @@ public class ClienteController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DatosDetalleCliente> actulizarCliente(@PathVariable Long id, @RequestBody DatosActualizarCliente datos){
+    public ResponseEntity<DatosDetalleCliente> actulizarCliente(@PathVariable Long id, @RequestBody DatosActualizarCliente datos) {
         DatosDetalleCliente cliente = clienteService.actualizarCliente(id, datos);
         return ResponseEntity.ok(cliente);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void eliminarCliente(@PathVariable Long id) {
+        clienteService.eliminarCliente(id);
     }
 
 

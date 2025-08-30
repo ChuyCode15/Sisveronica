@@ -30,6 +30,7 @@ public class ClienteService {
     public List<DatosDetalleCliente> buscarTodos() {
         return clienteRepository.findAll()
                 .stream()
+                .filter(Cliente::isActivo)
                 .map(DatosDetalleCliente::new)
                 .toList();
     }
@@ -55,6 +56,15 @@ public class ClienteService {
 
         clienteRepository.save(actualizarCliente);
         return new DatosDetalleCliente(actualizarCliente);
-
     }
+
+    @Transactional
+    public void eliminarCliente(Long id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("⚠️ el cliente que intenta eliminar no existe"));
+        if (!cliente.isActivo()) {
+            throw new ResourceNotFoundException("⛔ el cliente ya se encuentra eliminado");
+        }
+    }
+
 }

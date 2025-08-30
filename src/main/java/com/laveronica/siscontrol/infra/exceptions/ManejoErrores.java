@@ -62,4 +62,11 @@ public class ManejoErrores {
     }
 
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleOtherExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("⚠️ Ocurrió un error en el servidor");
+    }
+
+
 }
