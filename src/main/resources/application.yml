@@ -1,8 +1,17 @@
 spring:
+
   flyway:
     enabled: true
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:${DB_SVERO_URL}
     username: ${DB_USER_NAME}
     password: ${DB_PASS}
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+  web:
+    resources:
+      add-mappings: false

@@ -1,9 +1,13 @@
 package com.laveronica.siscontrol.domain.clientes;
 
 
+import com.laveronica.siscontrol.domain.contratos.Contrato;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "clientes")
 @Entity(name = "cliente")
@@ -30,8 +34,11 @@ public class Cliente {
     @Column(nullable = false)
     private boolean activo = true;
 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Contrato> contratos = new ArrayList<>();
 
-    public Cliente(@Valid DatosRegistroCliente datos){
+
+    public Cliente(@Valid DatosRegistroCliente datos) {
         this.nombre = datos.nombre();
         this.rfc = datos.rfc();
         this.calle = datos.calle();
