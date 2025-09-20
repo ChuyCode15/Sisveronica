@@ -1,4 +1,4 @@
-package com.laveronica.siscontrol.domain.contratos;
+package com.laveronica.siscontrol.domain.valores;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
