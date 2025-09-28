@@ -1,4 +1,4 @@
-package com.laveronica.siscontrol.domain.categoria;
+package com.laveronica.siscontrol.domain.categoria.dto;
 
 import com.laveronica.siscontrol.domain.valores.Partida;
 import jakarta.validation.constraints.NotNull;

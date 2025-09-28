@@ -1,4 +1,4 @@
-package com.laveronica.siscontrol.domain.clientes;
+package com.laveronica.siscontrol.domain.clientes.dto;
 
 
 import com.laveronica.siscontrol.domain.clientes.validaciones.ValidRfc;

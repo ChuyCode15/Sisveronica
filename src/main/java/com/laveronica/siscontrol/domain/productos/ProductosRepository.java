@@ -1,11 +1,26 @@
 package com.laveronica.siscontrol.domain.productos;
 
+import com.laveronica.siscontrol.domain.categoria.Categoria;
+import com.laveronica.siscontrol.domain.productos.dto.DatosDetalleProducto;
+import com.laveronica.siscontrol.domain.valores.Partida;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+
 public interface ProductosRepository extends JpaRepository<Producto, Long> {
-    Optional findByNombre(String nombre);
 
     boolean existsByNombre(String nombre);
+
+    Page<Producto> findAllByActivoTrue(Pageable paguinas);
+
+    Page<Producto> findAllByPartidaAndActivoTrue(Partida partida, Pageable paguinas);
+
+    Page<Producto> findAllByCategoriaAndActivoTrue(Categoria categoria, Pageable paguinas);
+
+    Optional<Producto> findByIdAndActivoTrue(Long id);
+
+    Optional<Producto> findByNombreAndActivoTrue(String nombre);
 }

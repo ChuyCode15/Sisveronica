@@ -1,9 +1,11 @@
 package com.laveronica.siscontrol.controller;
 
 import com.laveronica.siscontrol.domain.clientes.*;
+import com.laveronica.siscontrol.domain.clientes.dto.DatosActualizarCliente;
+import com.laveronica.siscontrol.domain.clientes.dto.DatosDetalleCliente;
+import com.laveronica.siscontrol.domain.clientes.dto.DatosRegistroCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

@@ -1,4 +1,4 @@
-package com.laveronica.siscontrol.domain.clientes;
+package com.laveronica.siscontrol.domain.clientes.dto;
 
 public record DatosActualizarCliente(
         String nombre,

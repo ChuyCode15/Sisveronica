@@ -1,6 +1,9 @@
 package com.laveronica.siscontrol.domain.clientes;
 
 
+import com.laveronica.siscontrol.domain.clientes.dto.DatosActualizarCliente;
+import com.laveronica.siscontrol.domain.clientes.dto.DatosDetalleCliente;
+import com.laveronica.siscontrol.domain.clientes.dto.DatosRegistroCliente;
 import com.laveronica.siscontrol.infra.exceptions.ex.RecursoExistenteException;
 import com.laveronica.siscontrol.infra.exceptions.ex.ResourceNotFoundException;
 import jakarta.transaction.Transactional;

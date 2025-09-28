@@ -1,7 +1,6 @@
 package com.laveronica.siscontrol.domain.categoria.validaciones.registro;
 
-import com.laveronica.siscontrol.domain.categoria.DatosDetalleCategoria;
-import com.laveronica.siscontrol.domain.categoria.DatosRegistroCategoria;
+import com.laveronica.siscontrol.domain.categoria.dto.DatosRegistroCategoria;
 
 public interface ValiadacionesRegistarCategorias {
 

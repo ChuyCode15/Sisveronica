@@ -1,6 +1,9 @@
 package com.laveronica.siscontrol.controller;
 
 import com.laveronica.siscontrol.domain.categoria.*;
+import com.laveronica.siscontrol.domain.categoria.dto.DatosActualizarCategoria;
+import com.laveronica.siscontrol.domain.categoria.dto.DatosDetalleCategoria;
+import com.laveronica.siscontrol.domain.categoria.dto.DatosRegistroCategoria;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

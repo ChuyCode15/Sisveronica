@@ -1,11 +1,8 @@
-package com.laveronica.siscontrol.domain.productos;
+package com.laveronica.siscontrol.domain.productos.dto;
 
-import com.laveronica.siscontrol.domain.categoria.Categoria;
+import com.laveronica.siscontrol.domain.productos.Producto;
 import com.laveronica.siscontrol.domain.valores.Partida;
-import com.laveronica.siscontrol.domain.valores.UnidadMedida;
 import jakarta.validation.constraints.NotNull;
-
-import javax.swing.*;
 
 
 public record DatosDetalleProducto(

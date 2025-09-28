@@ -1,5 +1,6 @@
 package com.laveronica.siscontrol.domain.clientes;
 
+import com.laveronica.siscontrol.domain.clientes.dto.DatosRegistroCliente;
 import com.laveronica.siscontrol.domain.contratos.Contrato;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;

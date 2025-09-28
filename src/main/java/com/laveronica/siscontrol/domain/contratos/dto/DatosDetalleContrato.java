@@ -1,10 +1,8 @@
-package com.laveronica.siscontrol.domain.contratos;
+package com.laveronica.siscontrol.domain.contratos.dto;
 
-import com.laveronica.siscontrol.domain.clientes.Cliente;
+import com.laveronica.siscontrol.domain.contratos.Contrato;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Date;
 
 public record DatosDetalleContrato(
         Long id,

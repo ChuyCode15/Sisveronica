@@ -1,6 +1,7 @@
 package com.laveronica.siscontrol.domain.productos;
 
 import com.laveronica.siscontrol.domain.categoria.Categoria;
+import com.laveronica.siscontrol.domain.productos.dto.DatosRegistroProducto;
 import com.laveronica.siscontrol.domain.valores.Partida;
 import com.laveronica.siscontrol.domain.valores.UnidadMedida;
 import jakarta.persistence.*;
@@ -47,11 +48,11 @@ public class Producto {
     @Column(nullable = false)
     private Boolean activo;
 
-    public Producto(@Valid DatosRegistroProducto datos, Categoria categoria) {
+    public Producto(@Valid DatosRegistroProducto datos, Partida partida,Categoria categoria) {
 
         this.id = null;
         this.nombre = datos.nombre();
-        this.partida = datos.partida();
+        this.partida = partida;
         this.categoria = categoria;
         this.unidadMedida = datos.unidadMedida();
         this.precioCompra = datos.precioCompra();
