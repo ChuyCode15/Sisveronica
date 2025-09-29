@@ -1,6 +1,7 @@
 package com.laveronica.siscontrol.controller;
 
 import com.laveronica.siscontrol.domain.productos.*;
+import com.laveronica.siscontrol.domain.productos.dto.DatosActualizarProducto;
 import com.laveronica.siscontrol.domain.productos.dto.DatosDetalleProducto;
 import com.laveronica.siscontrol.domain.productos.dto.DatosListarProductos;
 import com.laveronica.siscontrol.domain.productos.dto.DatosRegistroProducto;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -61,4 +64,21 @@ public class ProdutoController {
         return ResponseEntity.ok(producto);
     }
 
+    @GetMapping("/buscar_palabras")
+    public ResponseEntity<Page<DatosDetalleProducto>> buscarProductosPorPalabra(@RequestParam (name = "q") String palabraBuscar, @PageableDefault(size = 10, sort = {"nombre"}) Pageable paguinas){
+        var productos = productoService.buscarProductosPorPalabra(palabraBuscar, paguinas);
+        return ResponseEntity.ok(productos);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<DatosDetalleProducto> actualizarProductoId(@PathVariable Long id, @RequestBody DatosActualizarProducto datos){
+        var nuevoProducto = productoService.actualizarProductoId(id, datos);
+        return ResponseEntity.ok(nuevoProducto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity eliminarProducto(@PathVariable Long id ){
+        productoService.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
+    }
 }

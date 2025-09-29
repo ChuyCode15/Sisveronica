@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 public record DatosDetalleProducto(
 
         @NotNull
+        Long id,
+
+        @NotNull
         String nombre,
 
         @NotNull
@@ -30,6 +33,7 @@ public record DatosDetalleProducto(
 
     public DatosDetalleProducto(Producto producto){
         this(
+                producto.getId(),
                 producto.getNombre(),
                 producto.getPartida(),
                 producto.getCategoria().getId(),
