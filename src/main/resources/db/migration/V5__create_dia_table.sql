@@ -1,0 +1,8 @@
+CREATE TABLE dia (
+
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    dia_semana VARCHAR(100) NOT NULL,
+    activo TINYINT(1) NOT NULL
+
+);
