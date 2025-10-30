@@ -1,6 +1,8 @@
-package com.laveronica.siscontrol.domain.clientes;
+package com.laveronica.siscontrol.services;
 
 
+import com.laveronica.siscontrol.domain.clientes.Cliente;
+import com.laveronica.siscontrol.repositories.ClienteRepository;
 import com.laveronica.siscontrol.domain.clientes.dto.DatosActualizarCliente;
 import com.laveronica.siscontrol.domain.clientes.dto.DatosDetalleCliente;
 import com.laveronica.siscontrol.domain.clientes.dto.DatosRegistroCliente;

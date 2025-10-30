@@ -1,5 +1,6 @@
-package com.laveronica.siscontrol.domain.categoria;
+package com.laveronica.siscontrol.repositories;
 
+import com.laveronica.siscontrol.domain.categoria.Categoria;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 

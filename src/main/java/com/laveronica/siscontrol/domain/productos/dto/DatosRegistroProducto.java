@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.math.BigDecimal;
+
 public record DatosRegistroProducto(
 
         @NotNull(message = "El nombre del producto es obligatorio")
@@ -19,11 +21,11 @@ public record DatosRegistroProducto(
         @NotNull(message = "La unidad de medida es obligatoria")
         UnidadMedida unidadMedida,
 
-        Double precioCompra,
+        BigDecimal precioCompra,
 
         @NotNull(message = "El precio de venta es obligatorio")
         @Positive(message = "El precio de venta debe ser mayor a 0")
-        Double precioVenta
+        BigDecimal precioVenta
 ) {
 }
 

@@ -4,6 +4,7 @@ import com.laveronica.siscontrol.domain.contratos.*;
 import com.laveronica.siscontrol.domain.contratos.dto.DatosActualizarContrato;
 import com.laveronica.siscontrol.domain.contratos.dto.DatosDetalleContrato;
 import com.laveronica.siscontrol.domain.contratos.dto.DatosRegistroContrato;
+import com.laveronica.siscontrol.services.ContratoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

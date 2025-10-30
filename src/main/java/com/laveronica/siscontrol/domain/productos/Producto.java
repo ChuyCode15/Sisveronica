@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -40,10 +42,10 @@ public class Producto {
     private UnidadMedida unidadMedida;
 
     @Column(name = "precio_compra")
-    private Double precioCompra;
+    private BigDecimal precioCompra;
 
     @Column(name = "precio_venta")
-    private Double precioVenta;
+    private BigDecimal precioVenta;
 
     @Column(nullable = false)
     private Boolean activo;
@@ -60,6 +62,7 @@ public class Producto {
         this.activo = true;
 
     }
+
 }
 
 

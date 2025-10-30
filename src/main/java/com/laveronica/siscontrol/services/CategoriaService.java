@@ -1,9 +1,11 @@
-package com.laveronica.siscontrol.domain.categoria;
+package com.laveronica.siscontrol.services;
 
+import com.laveronica.siscontrol.domain.categoria.Categoria;
 import com.laveronica.siscontrol.domain.categoria.dto.DatosActualizarCategoria;
 import com.laveronica.siscontrol.domain.categoria.dto.DatosDetalleCategoria;
 import com.laveronica.siscontrol.domain.categoria.dto.DatosRegistroCategoria;
 import com.laveronica.siscontrol.infra.exceptions.ex.RecursoExistenteException;
+import com.laveronica.siscontrol.repositories.CategoriaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

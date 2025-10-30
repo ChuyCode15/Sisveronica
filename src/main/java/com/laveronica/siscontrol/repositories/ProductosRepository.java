@@ -1,7 +1,7 @@
-package com.laveronica.siscontrol.domain.productos;
+package com.laveronica.siscontrol.repositories;
 
 import com.laveronica.siscontrol.domain.categoria.Categoria;
-import com.laveronica.siscontrol.domain.productos.dto.DatosDetalleProducto;
+import com.laveronica.siscontrol.domain.productos.Producto;
 import com.laveronica.siscontrol.domain.valores.Partida;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

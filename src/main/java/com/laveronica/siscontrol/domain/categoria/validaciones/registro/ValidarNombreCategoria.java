@@ -1,6 +1,6 @@
 package com.laveronica.siscontrol.domain.categoria.validaciones.registro;
 
-import com.laveronica.siscontrol.domain.categoria.CategoriaRepository;
+import com.laveronica.siscontrol.repositories.CategoriaRepository;
 import com.laveronica.siscontrol.domain.categoria.dto.DatosRegistroCategoria;
 import com.laveronica.siscontrol.infra.exceptions.ex.RuleValidationException;
 import org.springframework.beans.factory.annotation.Autowired;

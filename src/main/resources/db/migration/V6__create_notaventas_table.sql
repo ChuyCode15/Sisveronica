@@ -1,4 +1,4 @@
-CREATE TABLE notaventa (
+CREATE TABLE nota_ventas (
 
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha DATE NOT NULL,

@@ -3,18 +3,15 @@ package com.laveronica.siscontrol.domain.notaventadetalle;
 import com.laveronica.siscontrol.domain.notaventa.NotaVenta;
 import com.laveronica.siscontrol.domain.productos.Producto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Table(name = ("notaventadetalles"))
-@Entity(name = "notaventadetalle")
+@Table(name = ("nota_venta_detalles"))
+@Entity(name = "nota_venta_detalle")
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -45,4 +42,14 @@ public class NotaVentaDetalle {
     @JoinColumn(name = "notaventa_id", nullable = false)
     private NotaVenta notaVenta;
 
+    public NotaVentaDetalle(Integer cantidad, Producto producto, NotaVenta notaVenta, BigDecimal subTotal){
+        this.id = null;
+        this.cantidad = cantidad;
+        this.producto = producto;
+        this.precioVenta = producto.getPrecioVenta();
+        this.subTotal = subTotal;
+        this.activo = true;
+        this.notaVenta = notaVenta;
+
+    }
 }

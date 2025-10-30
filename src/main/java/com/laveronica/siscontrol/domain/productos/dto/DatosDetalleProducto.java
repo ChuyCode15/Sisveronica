@@ -4,6 +4,8 @@ import com.laveronica.siscontrol.domain.productos.Producto;
 import com.laveronica.siscontrol.domain.valores.Partida;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+
 
 public record DatosDetalleProducto(
 
@@ -22,10 +24,10 @@ public record DatosDetalleProducto(
         @NotNull
         String unidadMedida,
 
-        Double precioCompra,
+        BigDecimal precioCompra,
 
         @NotNull
-        Double precioVenta
+        BigDecimal precioVenta
 
 
 

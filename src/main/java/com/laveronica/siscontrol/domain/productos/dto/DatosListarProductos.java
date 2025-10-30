@@ -3,12 +3,14 @@ package com.laveronica.siscontrol.domain.productos.dto;
 
 import com.laveronica.siscontrol.domain.productos.Producto;
 
+import java.math.BigDecimal;
+
 public record DatosListarProductos(
         Long id,
         String nombre,
         String partida,
         String categoria,
-        Double precioVenta
+        BigDecimal precioVenta
 
 ) {
 

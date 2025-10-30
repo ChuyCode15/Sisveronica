@@ -1,7 +1,7 @@
-package com.laveronica.siscontrol.domain.productos.helpers;
+package com.laveronica.siscontrol.utils.helpers;
 
 import com.laveronica.siscontrol.domain.categoria.Categoria;
-import com.laveronica.siscontrol.domain.categoria.CategoriaRepository;
+import com.laveronica.siscontrol.repositories.CategoriaRepository;
 import com.laveronica.siscontrol.infra.exceptions.ex.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

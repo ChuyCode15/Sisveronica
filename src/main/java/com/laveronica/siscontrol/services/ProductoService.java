@@ -1,16 +1,18 @@
-package com.laveronica.siscontrol.domain.productos;
+package com.laveronica.siscontrol.services;
 
+import com.laveronica.siscontrol.domain.productos.Producto;
+import com.laveronica.siscontrol.repositories.ProductosRepository;
 import com.laveronica.siscontrol.domain.productos.dto.DatosActualizarProducto;
 import com.laveronica.siscontrol.domain.categoria.Categoria;
 import com.laveronica.siscontrol.domain.productos.dto.DatosDetalleProducto;
 import com.laveronica.siscontrol.domain.productos.dto.DatosListarProductos;
 import com.laveronica.siscontrol.domain.productos.dto.DatosRegistroProducto;
-import com.laveronica.siscontrol.domain.productos.helpers.CategoriaValidacionesHelper;
+import com.laveronica.siscontrol.utils.helpers.CategoriaValidacionesHelper;
 import com.laveronica.siscontrol.domain.productos.validaciones.ValidadorDeProductos;
 import com.laveronica.siscontrol.domain.valores.Partida;
 import com.laveronica.siscontrol.domain.valores.UnidadMedida;
-import com.laveronica.siscontrol.domain.valores.helpers.PartidaValidacionesHelper;
-import com.laveronica.siscontrol.domain.valores.helpers.UnidadMedidaValidacionesHelper;
+import com.laveronica.siscontrol.utils.helpers.PartidaValidacionesHelper;
+import com.laveronica.siscontrol.utils.helpers.UnidadMedidaValidacionesHelper;
 import com.laveronica.siscontrol.infra.exceptions.ex.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import java.util.List;
 public class ProductoService {
 
     @Autowired
+    //TODO @Qualifier estudiar
     private PartidaValidacionesHelper partidaValidacionesHelper;
 
     @Autowired
@@ -32,6 +35,7 @@ public class ProductoService {
     @Autowired UnidadMedidaValidacionesHelper unidadMedidaValidacionesHelper;
 
     @Autowired
+
     private List<ValidadorDeProductos> validadores;
 
     @Autowired

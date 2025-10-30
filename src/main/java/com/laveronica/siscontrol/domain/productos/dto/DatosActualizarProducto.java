@@ -3,6 +3,8 @@ package com.laveronica.siscontrol.domain.productos.dto;
 import com.laveronica.siscontrol.domain.valores.Partida;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+
 public record DatosActualizarProducto(
 
 
@@ -14,9 +16,9 @@ public record DatosActualizarProducto(
 
         String unidadMedida,
 
-        Double precioCompra,
+        BigDecimal precioCompra,
 
-        Double precioVenta
+        BigDecimal precioVenta
 
 ) {
 }

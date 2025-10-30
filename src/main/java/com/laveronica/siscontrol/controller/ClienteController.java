@@ -4,6 +4,7 @@ import com.laveronica.siscontrol.domain.clientes.*;
 import com.laveronica.siscontrol.domain.clientes.dto.DatosActualizarCliente;
 import com.laveronica.siscontrol.domain.clientes.dto.DatosDetalleCliente;
 import com.laveronica.siscontrol.domain.clientes.dto.DatosRegistroCliente;
+import com.laveronica.siscontrol.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

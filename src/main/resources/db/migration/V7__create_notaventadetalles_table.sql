@@ -1,4 +1,4 @@
-CREATE TABLE notaventadetalle (
+CREATE TABLE nota_venta_detalles (
 
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     cantidad INTEGER NOT NULL,
