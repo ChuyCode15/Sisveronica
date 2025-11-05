@@ -55,7 +55,6 @@ public class NotaVenta {
     @Column(name = "total_general", nullable = false)
     private BigDecimal totalGeneral;
 
-    @Column(nullable = false)
     private Boolean activo;
 
     public NotaVenta(Cliente cliente, Partida partida, Dia dia) {

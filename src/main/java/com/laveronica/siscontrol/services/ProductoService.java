@@ -54,7 +54,7 @@ public class ProductoService {
                 datos.precioVenta()
         );
         validadores.forEach(v -> v.validar(datosNormalizados));
-        Partida partida = partidaValidacionesHelper.validaPartidaExista(datosNormalizados.partida());
+        Partida partida = partidaValidacionesHelper.validaPartidaExistaString(datosNormalizados.partida());
         Categoria categoria = categoriaValidacionesHelper.validarCategoriaActiva(datosNormalizados.categoriaId());
         var nuevoProducto = new Producto(datosNormalizados, partida, categoria);
         productosRepository.save(nuevoProducto);
@@ -70,7 +70,7 @@ public class ProductoService {
 
     public Page<DatosListarProductos> listaProductosPartida(Pageable paguinas, String partida) {
 
-        Partida partidaEnum = partidaValidacionesHelper.validaPartidaExista(partida);
+        Partida partidaEnum = partidaValidacionesHelper.validaPartidaExistaString(partida);
         var page = productosRepository.findAllByPartidaAndActivoTrue(partidaEnum, paguinas).map(DatosListarProductos::new);
         if (page.isEmpty()){
             throw new ResourceNotFoundException("No se encontraron productos activos para la partida.");
@@ -134,7 +134,7 @@ public class ProductoService {
             productoActualizado.setNombre(nombreNormalizado);
         }
         if (datos.partida() != null){
-            Partida partida = partidaValidacionesHelper.validaPartidaExista(datos.partida());
+            Partida partida = partidaValidacionesHelper.validaPartidaExistaString(datos.partida());
             productoActualizado.setPartida(partida);
         }
         if (datos.categoriaId() != null) {

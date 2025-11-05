@@ -5,6 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface NotaVentaRepository extends JpaRepository<NotaVenta, Long> {
     Page<NotaVenta> findAllByActivoTrue(Pageable paginacion);
+
+    Optional<NotaVenta> findByIdAndActivoTrue(Long id);
 }

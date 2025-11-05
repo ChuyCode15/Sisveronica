@@ -3,19 +3,20 @@ package com.laveronica.siscontrol.services;
 import com.laveronica.siscontrol.domain.clientes.Cliente;
 import com.laveronica.siscontrol.domain.dias.Dia;
 import com.laveronica.siscontrol.domain.notaventa.NotaVenta;
+import com.laveronica.siscontrol.domain.notaventa.dto.DatosActualizarNota;
 import com.laveronica.siscontrol.domain.notaventa.dto.DatosListarNota;
+import com.laveronica.siscontrol.domain.notaventadetalle.dto.NotaVentaActualizarDetalle;
+import com.laveronica.siscontrol.domain.productos.Producto;
 import com.laveronica.siscontrol.repositories.NotaVentaRepository;
 import com.laveronica.siscontrol.domain.notaventa.dto.DatosDetalleNota;
 import com.laveronica.siscontrol.domain.notaventa.dto.DatosRegistroNota;
 import com.laveronica.siscontrol.domain.notaventadetalle.NotaVentaDetalle;
 import com.laveronica.siscontrol.domain.valores.Partida;
-import com.laveronica.siscontrol.utils.helpers.ClienteValidacionesHelper;
-import com.laveronica.siscontrol.utils.helpers.PartidaValidacionesHelper;
+import com.laveronica.siscontrol.utils.helpers.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -35,22 +36,27 @@ public class NotaVentaService {
     private PartidaValidacionesHelper partidaValidacionesHelper;
 
     @Autowired
+    public ProductoValidacionesHelper productoValidacionesHelper;
+
+    @Autowired
     private NotaVentaDetalleService notaVentaDetalleService;
 
     @Autowired
     private DiaService diaService;
 
+    @Autowired
+    private NotaVentaValidacionesHelper notaVentaValidacionesHelper;
+
     @Transactional
     public DatosDetalleNota registrarNota(DatosRegistroNota datos) {
 
-
         Cliente cliente = clienteValidacionesHelper.validaClienteExistaId(datos.clienteId());
-        Partida partida = partidaValidacionesHelper.validaPartidaExista(datos.partida());
+        Partida partida = partidaValidacionesHelper.validaPartidaExistaString(datos.partida());
         Dia dia = diaService.registarOBuscarDia(LocalDate.now());
 
-        NotaVenta notaNueva = new NotaVenta( cliente, partida, dia);
+        NotaVenta notaNueva = new NotaVenta(cliente, partida, dia);
 
-        List<NotaVentaDetalle> detalles = notaVentaDetalleService.registrarNuevoDetalle(datos.detalles(), notaNueva);
+        List<NotaVentaDetalle> detalles = notaVentaDetalleService.registrarNuevaListaNotaVentasDetalles(datos.detalles(), notaNueva);
 
         notaNueva.setDetalles(detalles);
 
@@ -59,12 +65,56 @@ public class NotaVentaService {
 
         notaVentaRepository.save(notaNueva);
         return new DatosDetalleNota(notaNueva);
-    };
+    }
 
     public Page<DatosListarNota> listarNotas(Pageable paginacion) {
         return notaVentaRepository.findAllByActivoTrue(paginacion)
                 .map(DatosListarNota::new);
     }
 
+    public DatosDetalleNota buscarNotaId(Long id) {
+        NotaVenta nota = notaVentaValidacionesHelper.notaVentaExiste(id);
+        return new DatosDetalleNota(nota);
 
+    }
+
+    @Transactional
+    public DatosDetalleNota actualizarNota(Long id, DatosActualizarNota datos) {
+
+        NotaVenta nota = notaVentaValidacionesHelper.notaVentaExiste(id);
+        var partida = partidaValidacionesHelper.validaPartidaExistaString(datos.partida());
+        nota.setPartida(partida);
+
+        List<NotaVentaDetalle> detallesExistentes = nota.getDetalles();
+        List<NotaVentaActualizarDetalle> actualizarDetalles = datos.detalles();
+
+        for (NotaVentaActualizarDetalle actualizaDetalle : actualizarDetalles) {
+            Producto productonuevo = productoValidacionesHelper.encontrarProductoNombre(actualizaDetalle.producto());
+
+            NotaVentaDetalle detalleCoicidente = detallesExistentes.stream()
+                    .filter(d -> d.getProducto().getId().equals(productonuevo.getId()))
+                    .findFirst()
+                    .orElse(null);
+            if (detalleCoicidente != null) {
+                detalleCoicidente.setCantidad(actualizaDetalle.cantidad());
+                var subtotal = NotaVentaDetalleService.calcularSubTotal(actualizaDetalle.cantidad(), productonuevo.getPrecioVenta());
+                detalleCoicidente.setSubTotal(subtotal);
+            }else {
+                NotaVentaDetalle nuevaDetalle = new NotaVentaDetalle(
+
+                        actualizaDetalle.cantidad(),
+                        productonuevo,
+                        nota,
+                        productonuevo.getPrecioVenta()
+
+                );
+                notaVentaDetalleService.agregarUnDetalleNuevo(nuevaDetalle);
+                detallesExistentes.add(nuevaDetalle);
+            }
+        }
+        BigDecimal nuevoTotalGeneral = notaVentaDetalleService.calcularTotalGeneral(detallesExistentes);
+        nota.setTotalGeneral(nuevoTotalGeneral);
+        notaVentaRepository.save(nota);
+        return new DatosDetalleNota(nota);
+    }
 }

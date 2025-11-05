@@ -1,5 +1,6 @@
 package com.laveronica.siscontrol.controller;
 
+import com.laveronica.siscontrol.domain.notaventa.dto.DatosActualizarNota;
 import com.laveronica.siscontrol.domain.notaventa.dto.DatosListarNota;
 import com.laveronica.siscontrol.services.NotaVentaService;
 import com.laveronica.siscontrol.domain.notaventa.dto.DatosDetalleNota;
@@ -31,6 +32,18 @@ public class NotaVentaController {
     public ResponseEntity<Page<DatosListarNota>> listaNotas(@PageableDefault(size = 9, sort = "fecha")Pageable paginacion){
         var page = notaVentaService.listarNotas(paginacion);
         return ResponseEntity.ok().body(page);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<DatosDetalleNota> buscarNotaId(@PathVariable Long id){
+        var nota = notaVentaService.buscarNotaId(id);
+        return ResponseEntity.ok().body(nota);
+    }
+
+    @PatchMapping(path = "/{id}")
+    public ResponseEntity<DatosDetalleNota> actualizarNota(@PathVariable Long id, @RequestBody @Valid DatosActualizarNota datos){
+        var notaActualizada = notaVentaService.actualizarNota(id, datos);
+        return ResponseEntity.ok().body(notaActualizada);
     }
 
 }

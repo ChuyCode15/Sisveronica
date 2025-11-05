@@ -3,8 +3,11 @@ package com.laveronica.siscontrol.services;
 import com.laveronica.siscontrol.domain.notaventa.NotaVenta;
 import com.laveronica.siscontrol.domain.notaventadetalle.NotaVentaDetalle;
 import com.laveronica.siscontrol.domain.notaventadetalle.dto.NotaVentaDetalleRegistro;
+import com.laveronica.siscontrol.domain.notaventadetalle.dto.NotaVentaListarDetalle;
 import com.laveronica.siscontrol.domain.productos.Producto;
+import com.laveronica.siscontrol.repositories.NotaVentaDetalleRepository;
 import com.laveronica.siscontrol.utils.helpers.ProductoValidacionesHelper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +22,11 @@ public class NotaVentaDetalleService {
     @Autowired
     private ProductoValidacionesHelper productoValidacionesHelper;
 
+    @Autowired
+    private NotaVentaDetalleRepository notaVentaDetalleRepository;
 
-    public List<NotaVentaDetalle> registrarNuevoDetalle(List<NotaVentaDetalleRegistro> datos, NotaVenta notaVenta){
+
+    public List<NotaVentaDetalle> registrarNuevaListaNotaVentasDetalles(List<NotaVentaDetalleRegistro> datos, NotaVenta notaVenta){
 
         List<NotaVentaDetalle> detalles = datos.stream()
                 .map(dn -> {
@@ -32,9 +38,12 @@ public class NotaVentaDetalleService {
                 })
                 .collect(Collectors.toList());
         return detalles;
-
     }
 
+    @Transactional
+    public NotaVentaDetalle agregarUnDetalleNuevo(NotaVentaDetalle datos) {
+        return notaVentaDetalleRepository.save(datos);
+    }
 
     public static BigDecimal calcularSubTotal(Integer cantidad, BigDecimal precioVenta) {
         return precioVenta.multiply(new BigDecimal(cantidad));

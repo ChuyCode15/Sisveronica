@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PartidaValidacionesHelper {
 
-    public Partida validaPartidaExista(String partida) {
+    public Partida validaPartidaExistaString(String partida) {
 
         if (partida == null || partida.isBlank()) {
             throw new ResourceNotFoundException("La partida es requerida y no puede estar vacía.");
@@ -21,4 +21,5 @@ public class PartidaValidacionesHelper {
         }
         return partidaEnum;
     }
+
 }
