@@ -13,6 +13,8 @@ drop table nota_venta_detalle;
 drop table productos;
 drop table flyway_schema_history ;
 
+select * from nota_venta_detalles;
+
 
 
 
