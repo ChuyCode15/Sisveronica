@@ -1,7 +1,6 @@
 package com.laveronica.siscontrol.services;
 
 import com.laveronica.siscontrol.domain.clientes.Cliente;
-import com.laveronica.siscontrol.domain.dias.Dia;
 import com.laveronica.siscontrol.domain.notaventa.NotaVenta;
 import com.laveronica.siscontrol.domain.notaventa.dto.DatosActualizarNota;
 import com.laveronica.siscontrol.domain.notaventa.dto.DatosListarNota;
@@ -20,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -42,27 +40,17 @@ public class NotaVentaService {
     private NotaVentaDetalleService notaVentaDetalleService;
 
     @Autowired
-    private DiaService diaService;
-
-    @Autowired
     private NotaVentaValidacionesHelper notaVentaValidacionesHelper;
 
     @Transactional
     public DatosDetalleNota registrarNota(DatosRegistroNota datos) {
-
         Cliente cliente = clienteValidacionesHelper.validaClienteExistaId(datos.clienteId());
         Partida partida = partidaValidacionesHelper.validaPartidaExistaString(datos.partida());
-        Dia dia = diaService.registarOBuscarDia(LocalDate.now());
-
-        NotaVenta notaNueva = new NotaVenta(cliente, partida, dia);
-
+        NotaVenta notaNueva = new NotaVenta(cliente, partida);
         List<NotaVentaDetalle> detalles = notaVentaDetalleService.registrarNuevaListaNotaVentasDetalles(datos.detalles(), notaNueva);
-
         notaNueva.setDetalles(detalles);
-
         BigDecimal totalGeneral = notaVentaDetalleService.calcularTotalGeneral(detalles);
         notaNueva.setTotalGeneral(totalGeneral);
-
         notaVentaRepository.save(notaNueva);
         return new DatosDetalleNota(notaNueva);
     }
@@ -84,13 +72,10 @@ public class NotaVentaService {
         NotaVenta nota = notaVentaValidacionesHelper.notaVentaExiste(id);
         var partida = partidaValidacionesHelper.validaPartidaExistaString(datos.partida());
         nota.setPartida(partida);
-
         List<NotaVentaDetalle> detallesExistentes = nota.getDetalles();
         List<NotaVentaActualizarDetalle> actualizarDetalles = datos.detalles();
-
         for (NotaVentaActualizarDetalle actualizaDetalle : actualizarDetalles) {
             Producto productonuevo = productoValidacionesHelper.encontrarProductoNombre(actualizaDetalle.producto());
-
             NotaVentaDetalle detalleCoicidente = detallesExistentes.stream()
                     .filter(d -> d.getProducto().getId().equals(productonuevo.getId()))
                     .findFirst()
@@ -101,12 +86,9 @@ public class NotaVentaService {
                 detalleCoicidente.setSubTotal(subtotal);
             }else {
                 NotaVentaDetalle nuevaDetalle = new NotaVentaDetalle(
-
                         actualizaDetalle.cantidad(),
                         productonuevo,
-                        nota,
-                        productonuevo.getPrecioVenta()
-
+                        nota
                 );
                 notaVentaDetalleService.agregarUnDetalleNuevo(nuevaDetalle);
                 detallesExistentes.add(nuevaDetalle);

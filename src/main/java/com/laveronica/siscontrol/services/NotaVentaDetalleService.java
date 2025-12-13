@@ -32,8 +32,7 @@ public class NotaVentaDetalleService {
                 .map(dn -> {
                     Producto producto = productoValidacionesHelper.encontrarProductoId(dn.productoId());
                     Integer cantidad = dn.cantidad();
-                    BigDecimal subTotal = calcularSubTotal(cantidad, producto.getPrecioVenta());
-                    return new NotaVentaDetalle(cantidad, producto, notaVenta, subTotal);
+                    return new NotaVentaDetalle(cantidad, producto, notaVenta);
 
                 })
                 .collect(Collectors.toList());

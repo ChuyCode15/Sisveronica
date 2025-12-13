@@ -22,7 +22,7 @@ public class ContratosController {
     private ContratoService contratoService;
 
     @PostMapping
-    public ResponseEntity regitrar(@RequestBody @Valid DatosRegistroContrato datos, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity registrar(@RequestBody @Valid DatosRegistroContrato datos, UriComponentsBuilder uriComponentsBuilder) {
         Contrato nuevoContrato = contratoService.registrarContrato(datos);
         var uri = uriComponentsBuilder.path("/contratos/{id}").buildAndExpand(nuevoContrato.getId()).toUri();
         return ResponseEntity.created(uri).body(new DatosDetalleContrato(nuevoContrato));
@@ -42,14 +42,14 @@ public class ContratosController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<DatosDetalleContrato> actualizarContrato(@PathVariable Long id, @Valid @RequestBody DatosActualizarContrato datos){
-        DatosDetalleContrato actualizarContrato = contratoService.actualizarContrato(id, datos);
+        DatosDetalleContrato actualizarContrato = contratoService.actualizarContratoId(id, datos);
         return ResponseEntity.ok(actualizarContrato);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarContrato(@PathVariable Long id){
-         contratoService.elimiarContrato(id);
+         contratoService.eliminarContrato(id);
     }
 
 }

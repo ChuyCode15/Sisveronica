@@ -6,15 +6,14 @@ import com.laveronica.siscontrol.repositories.ClienteRepository;
 import com.laveronica.siscontrol.domain.contratos.dto.DatosActualizarContrato;
 import com.laveronica.siscontrol.domain.contratos.dto.DatosDetalleContrato;
 import com.laveronica.siscontrol.domain.contratos.dto.DatosRegistroContrato;
-import com.laveronica.siscontrol.infra.exceptions.ex.RecursoExistenteException;
-import com.laveronica.siscontrol.infra.exceptions.ex.ResourceNotFoundException;
 import com.laveronica.siscontrol.repositories.ContratoRepository;
-import jakarta.transaction.Transactional;
+import com.laveronica.siscontrol.utils.helpers.ClienteValidacionesHelper;
+import com.laveronica.siscontrol.utils.helpers.ContratoValidacionesHelper;
+import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,60 +25,57 @@ public class ContratoService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private ClienteValidacionesHelper clienteValidacionesHelper;
+
+    @Autowired
+    private ContratoValidacionesHelper contratoValidacionesHelper;
+
     @Transactional
     public Contrato registrarContrato(@Valid DatosRegistroContrato datos) {
-        Cliente cliente = clienteRepository.findById(datos.clienteId())
-                .orElseThrow(()-> new ResourceNotFoundException("⚠️ Cliente no encontrado !!" + datos.clienteId()));
-        if (!contratoRepository.existsByContrato(datos.contrato())){
-            Contrato nuevoContrato = new Contrato(datos, cliente);
-            contratoRepository.save(nuevoContrato);
-            return nuevoContrato;
-        }else {
-            throw new RecursoExistenteException("⚠️ Error el registro ya existe." + datos.contrato());
-        }
+        Cliente cliente = clienteValidacionesHelper.validaClienteExistaId(datos.clienteId());
+        contratoValidacionesHelper.validaContratoExiste(datos.contrato());
+        return contratoRepository.save(new Contrato(datos, cliente));
     }
 
     public List<DatosDetalleContrato> listarContratos() {
-        List<DatosDetalleContrato> lista = new ArrayList<>(contratoRepository.findAll())
+        return contratoRepository.findAllByActivoTrue()
                 .stream()
-                .filter(Contrato::getActivo)
                 .map(DatosDetalleContrato::new)
                 .toList();
-        return lista;
     }
 
     public DatosDetalleContrato buscarContratoId(@Valid Long id) {
-        return contratoRepository.findById(id)
-                .map(DatosDetalleContrato::new)
-                .orElseThrow(()-> new ResourceNotFoundException("⚠️ Contrato no encontrado !!"));
-
-
+        return contratoValidacionesHelper.buscarContratoExisteId(id);
     }
 
-    public DatosDetalleContrato actualizarContrato(@Valid Long id, DatosActualizarContrato datos) {
-        Contrato contrato = contratoRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("⚠️ Contrato no encontrado !!"));
-        if (datos.clienteId() != null ){
-            Cliente cliente = clienteRepository.findById(datos.clienteId())
-                    .orElseThrow(()-> new ResourceNotFoundException("⚠️ Cliente no encontrado !!" + datos.clienteId()));
-            contrato.setCliente(cliente);
+    public DatosDetalleContrato actualizarContratoId(@Valid Long id, DatosActualizarContrato datos) {
+
+        Contrato contrato = contratoValidacionesHelper.validaContratoExisteId(id);
+
+        if (datos.clienteId() != null) {
+            contrato.setCliente(clienteValidacionesHelper.validaClienteExistaId(datos.clienteId()));
         }
-        if (datos.partida() != null){
-            contrato.setPartida(datos.partida());
-        }
-        if (datos.fechaInicio() != null){
+
+        if (datos.fechaInicio() != null) {
             contrato.setFechaInicio(datos.fechaInicio());
         }
-        if (datos.fechaTermino() != null){
+
+        if (datos.fechaTermino() != null) {
             contrato.setFechaTermino(datos.fechaTermino());
         }
-        contratoRepository.save(contrato);
-        return new DatosDetalleContrato(contrato);
+
+        if (datos.presupuesto() != null) {
+            contrato.setPresupuesto(datos.presupuesto());
+        }
+
+        Contrato contratoActulizado = contratoRepository.save(contrato);
+
+        return new DatosDetalleContrato(contratoActulizado);
     }
 
-    public void elimiarContrato(Long id) {
-        Contrato contrato = contratoRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("⚠️ Contrato no encontrado !!"));
+    public void eliminarContrato(Long id) {
+        Contrato contrato = contratoValidacionesHelper.validaContratoExisteId(id);
         contrato.setActivo(false);
     }
 }

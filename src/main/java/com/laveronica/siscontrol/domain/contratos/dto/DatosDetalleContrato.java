@@ -2,25 +2,26 @@ package com.laveronica.siscontrol.domain.contratos.dto;
 
 import com.laveronica.siscontrol.domain.contratos.Contrato;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record DatosDetalleContrato(
         Long id,
-        String cliente,
         String contrato,
-        String partida,
+        String cliente,
         LocalDate fechaInicio,
-        LocalDate fechaTermino
+        LocalDate fechaTermino,
+        BigDecimal presupuesto
 
         ) {
     public DatosDetalleContrato(Contrato contrato){
         this(
                 contrato.getId(),
-                contrato.getCliente().getNombre(),
                 contrato.getContrato(),
-                contrato.getPartida().name(),
+                contrato.getCliente().getNombre(),
                 contrato.getFechaInicio(),
-                contrato.getFechaTermino()
+                contrato.getFechaTermino(),
+                contrato.getPresupuesto()
         );
     }
 }

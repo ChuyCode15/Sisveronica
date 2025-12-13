@@ -1,11 +1,12 @@
 CREATE TABLE nota_ventas (
 
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fecha DATE NOT NULL,
+    folio INT UNIQUE,
+    fecha DATETIME  NOT NULL,
     cliente_id BIGINT NOT NULL,
+    contrato_id BIGINT,
     partida VARCHAR(100) NOT NULL,
-    dia_id BIGINT NOT NULL,
     total_general DECIMAL(10,2) NOT NULL,
-    activo TINYINT(1) NOT NULL
+    activo BOOLEAN NOT NULL
 
 );

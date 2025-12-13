@@ -1,14 +1,14 @@
 package com.laveronica.siscontrol.domain.contratos.dto;
 
-import com.laveronica.siscontrol.domain.valores.Partida;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record DatosActualizarContrato(
 
         Long clienteId,
-        Partida partida,
         LocalDate fechaInicio,
-        LocalDate fechaTermino
+        LocalDate fechaTermino,
+        BigDecimal presupuesto
 ) {
 }

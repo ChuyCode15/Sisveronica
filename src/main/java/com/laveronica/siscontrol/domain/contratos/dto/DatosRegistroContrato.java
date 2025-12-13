@@ -1,22 +1,30 @@
 package com.laveronica.siscontrol.domain.contratos.dto;
 
 import com.laveronica.siscontrol.domain.valores.Partida;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record DatosRegistroContrato(
 
         @NotNull
-        Long clienteId,
-        @NotNull
         String contrato,
         @NotNull
-        Partida partida,
+        @Positive
+        Long clienteId,
         @NotNull
         LocalDate fechaInicio,
-
-        LocalDate fechaTermino
+        @NotNull
+        @Future
+        LocalDate fechaTermino,
+        @NotNull
+        @Positive
+        @Digits(integer = 10, fraction = 2)
+        BigDecimal presupuesto
 
 ) {
 

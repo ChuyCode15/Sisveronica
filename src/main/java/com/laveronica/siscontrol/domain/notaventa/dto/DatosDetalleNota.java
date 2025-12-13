@@ -1,7 +1,6 @@
 package com.laveronica.siscontrol.domain.notaventa.dto;
 
 import com.laveronica.siscontrol.domain.notaventa.NotaVenta;
-import com.laveronica.siscontrol.domain.notaventadetalle.NotaVentaDetalle;
 import com.laveronica.siscontrol.domain.notaventadetalle.dto.NotaVentaListarDetalle;
 import com.laveronica.siscontrol.domain.valores.Partida;
 

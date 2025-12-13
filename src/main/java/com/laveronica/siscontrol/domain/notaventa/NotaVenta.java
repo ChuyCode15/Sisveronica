@@ -1,10 +1,8 @@
 package com.laveronica.siscontrol.domain.notaventa;
 
 import com.laveronica.siscontrol.domain.clientes.Cliente;
-import com.laveronica.siscontrol.domain.dias.Dia;
-import com.laveronica.siscontrol.domain.notaventa.dto.DatosRegistroNota;
+import com.laveronica.siscontrol.domain.contratos.Contrato;
 import com.laveronica.siscontrol.domain.notaventadetalle.NotaVentaDetalle;
-import com.laveronica.siscontrol.domain.productos.Producto;
 import com.laveronica.siscontrol.domain.valores.Partida;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,12 +27,19 @@ public class NotaVenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDateTime fecha;
+    @Column(name = "folio", unique = true, nullable = false )
+    private Integer folio;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contrato_id")
+    private Contrato contrato;
+
+    @Column(nullable = false)
+    private LocalDateTime fecha;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -43,27 +48,24 @@ public class NotaVenta {
     @OneToMany(mappedBy = "notaVenta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NotaVentaDetalle> detalles = new ArrayList<>();
 
+    @Column(name = "total_general", nullable = false)
+    private BigDecimal totalGeneral;
+
+    @Column(nullable = false)
+    private Boolean activo;
+
     public void agregarDetalles(NotaVentaDetalle detalle) {
         detalles.add(detalle);
         detalle.setNotaVenta(this);
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dia_id", nullable = false)
-    private Dia dia;
-
-    @Column(name = "total_general", nullable = false)
-    private BigDecimal totalGeneral;
-
-    private Boolean activo;
-
-    public NotaVenta(Cliente cliente, Partida partida, Dia dia) {
+    public NotaVenta(Cliente cliente, Partida partida) {
         this.id = null;
+        this.folio = null;
         this.fecha = LocalDateTime.now();
         this.cliente = cliente;
         this.partida = partida;
         this.detalles = new ArrayList<>();
-        this.dia = dia;
         this.totalGeneral = BigDecimal.ZERO;
         this.activo = true;
 

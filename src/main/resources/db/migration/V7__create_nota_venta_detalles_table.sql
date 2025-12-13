@@ -6,6 +6,6 @@ CREATE TABLE nota_venta_detalles (
     precio_venta DECIMAL(10,2) NOT NULL,
     sub_total DECIMAL(10,2) NOT NULL,
     notaventa_id BIGINT NOT NULL,
-    activo TINYINT NOT NULL
+    activo BOOLEAN NOT NULL DEFAULT TRUE
 
 );

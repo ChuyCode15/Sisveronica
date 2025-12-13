@@ -30,7 +30,7 @@ public class ClienteValidacionesHelper {
 
     public Cliente validaClienteExistaId(Long id){
         Cliente cliente = clienteRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("⚠️ El id no coicide con ningun cliente o esta vacio")
+                () -> new ResourceNotFoundException("⚠️ Cliente no encontrado...")
         );
         return cliente;
     }

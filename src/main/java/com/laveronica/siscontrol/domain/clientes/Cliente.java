@@ -2,6 +2,7 @@ package com.laveronica.siscontrol.domain.clientes;
 
 import com.laveronica.siscontrol.domain.clientes.dto.DatosRegistroCliente;
 import com.laveronica.siscontrol.domain.contratos.Contrato;
+import com.laveronica.siscontrol.domain.notaventa.NotaVenta;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
@@ -26,6 +27,7 @@ public class Cliente {
 
     private String nombre;
 
+    @Column(unique = true)
     private String rfc;
 
     private String calle;
@@ -45,7 +47,11 @@ public class Cliente {
     private boolean activo = true;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotaVenta> notaVentas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contrato> contratos = new ArrayList<>();
+
 
     public Cliente(@Valid DatosRegistroCliente datos) {
         this.nombre = datos.nombre();

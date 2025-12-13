@@ -42,12 +42,12 @@ public class NotaVentaDetalle {
     @JoinColumn(name = "notaventa_id", nullable = false)
     private NotaVenta notaVenta;
 
-    public NotaVentaDetalle(Integer cantidad, Producto producto, NotaVenta notaVenta, BigDecimal subTotal){
+    public NotaVentaDetalle(Integer cantidad, Producto producto, NotaVenta notaVenta){
         this.id = null;
         this.cantidad = cantidad;
         this.producto = producto;
         this.precioVenta = producto.getPrecioVenta();
-        this.subTotal = subTotal;
+        this.subTotal = this.precioVenta.multiply(new BigDecimal(this.cantidad));
         this.activo = true;
         this.notaVenta = notaVenta;
 

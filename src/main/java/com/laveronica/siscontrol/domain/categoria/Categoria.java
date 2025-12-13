@@ -32,6 +32,7 @@ public class Categoria {
     @Column(nullable = false)
     private Partida partida;
 
+    @Column(nullable = false)
     private Boolean activo;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
