@@ -1,9 +1,9 @@
-CREATE TABLE orden_compra (
+CREATE TABLE orden_compras (
 
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     cliente_id BIGINT NOT NULL,
     contrato_id BIGINT NOT NULL,
-    partida VARCHAR(50) NOT NULL,
+    partida VARCHAR(100) NOT NULL,
     fecha_inicio_semana DATE NOT NULL,
     fecha_fin_semana DATE NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT TRUE,

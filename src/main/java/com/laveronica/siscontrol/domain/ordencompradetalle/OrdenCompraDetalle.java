@@ -2,6 +2,7 @@ package com.laveronica.siscontrol.domain.ordencompradetalle;
 
 import com.laveronica.siscontrol.domain.ordencompra.OrdenCompra;
 import com.laveronica.siscontrol.domain.ordencompradetalle.dto.DatosRegistroOrdenCompraDetalle;
+import com.laveronica.siscontrol.domain.productos.Producto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,10 @@ public class OrdenCompraDetalle {
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
+
     private Double lunes;
 
     private Double martes;
@@ -41,10 +46,11 @@ public class OrdenCompraDetalle {
     @Column(nullable = false)
     private boolean activo;
 
-    public OrdenCompraDetalle(DatosRegistroOrdenCompraDetalle datos) {
+    public OrdenCompraDetalle(DatosRegistroOrdenCompraDetalle datos, Producto producto, OrdenCompra ordenCompra) {
         this.id = null;
-        this.ordenCompra = datos.ordenCompra();
+        this.ordenCompra = ordenCompra;
         this.fecha = datos.fecha();
+        this.producto = producto;
         this.lunes = datos.lunes();
         this.martes = datos.martes();
         this.miercoles = datos.miercoles();

@@ -13,7 +13,7 @@ public record DatosListarNota(
         Long id,
         LocalDateTime fecha,
         String cliente,
-        Partida partida,
+        String partida,
         List<NotaVentaListarDetalle> detalles,
         BigDecimal totalGeneral
 
@@ -23,7 +23,7 @@ public record DatosListarNota(
                 datos.getId(),
                 datos.getFecha(),
                 datos.getCliente().getNombre(),
-                datos.getPartida(),
+                datos.getPartida().name(),
                 datos.getDetalles().stream()
                         .map(
                         detalle -> new NotaVentaListarDetalle(detalle))

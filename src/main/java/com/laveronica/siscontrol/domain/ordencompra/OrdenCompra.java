@@ -2,7 +2,8 @@ package com.laveronica.siscontrol.domain.ordencompra;
 
 import com.laveronica.siscontrol.domain.clientes.Cliente;
 import com.laveronica.siscontrol.domain.contratos.Contrato;
-import com.laveronica.siscontrol.domain.ordencompra.dto.datosRegistroOrdenCompra;
+import com.laveronica.siscontrol.domain.notaventadetalle.NotaVentaDetalle;
+import com.laveronica.siscontrol.domain.ordencompra.dto.DatosRegistroOrdenCompra;
 import com.laveronica.siscontrol.domain.ordencompradetalle.OrdenCompraDetalle;
 import com.laveronica.siscontrol.domain.valores.Partida;
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "orden_Compra")
+@Table(name = "orden_Compras")
 @Entity(name = "ordenes_Compra")
 
 @Getter
@@ -52,13 +53,19 @@ public class OrdenCompra {
     @Column(nullable = false)
     private Boolean activo;
 
-    public OrdenCompra(datosRegistroOrdenCompra datos, Cliente cliente, Contrato contrato, List<OrdenCompraDetalle> detalles){
+    public void agregarDetalles(OrdenCompraDetalle detalle) {
+        detalles.add(detalle);
+        detalle.setOrdenCompra(this);
+    }
+
+    public OrdenCompra(DatosRegistroOrdenCompra datos, Cliente cliente, Contrato contrato, Partida partida){
         this.id = null;
         this.cliente = cliente;
         this.contrato = contrato;
+        this.partida = partida;
         this.fechaInicioSemana = datos.fechaInicioSemana();
         this.fechaFinSemana = datos.fechaFinSemana();
-        this.detalles = detalles;
+        this.detalles = new ArrayList<>();
         this.activo = true;
 
     }

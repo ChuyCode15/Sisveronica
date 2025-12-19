@@ -5,14 +5,15 @@ import com.laveronica.siscontrol.domain.ordencompra.OrdenCompra;
 import java.time.LocalDate;
 
 public record DatosRegistroOrdenCompraDetalle(
-        OrdenCompra ordenCompra,
+
         LocalDate fecha,
-        double lunes,
-        double martes,
-        double miercoles,
-        double jueves,
-        double viernes,
-        double sabado,
-        double domingo
+        Long producto,
+        Double lunes,
+        Double martes,
+        Double miercoles,
+        Double jueves,
+        Double viernes,
+        Double sabado,
+        Double domingo
 ) {
 }

@@ -16,7 +16,7 @@ public record DatosDetalleProducto(
         String nombre,
 
         @NotNull
-        Partida partida,
+        String partida,
 
         @NotNull
         Long categoria,
@@ -37,7 +37,7 @@ public record DatosDetalleProducto(
         this(
                 producto.getId(),
                 producto.getNombre(),
-                producto.getPartida(),
+                producto.getPartida().name(),
                 producto.getCategoria().getId(),
                 producto.getUnidadMedida().name(),
                 producto.getPrecioCompra(),
